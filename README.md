@@ -7,11 +7,11 @@
 ## ✨ Características
 
 ✅ Gestión de tiempos y descansos 📅  
-✅ Interfaz sencilla y moderna ⚡  
-✅ Diseño responsivo 🎨  
-✅ Notificaciones 🔔  
-✅ Almacenamiento local 💾 
-✅ Historial y resumen de tareas por dia  📊 
+✅ Interfaz moderna y fácil de usar ⚡  
+✅ Diseño responsivo  🎨  
+✅ Notificaciones con sonido 🔔  
+✅ Historial y resumen de tareas por dia 📊  
+✅ Almacenamiento local 💾  
 
 ## 🛠️ Tecnologías utilizadas
 
