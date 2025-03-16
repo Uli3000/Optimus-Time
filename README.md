@@ -11,7 +11,6 @@
 ✅ Diseño responsivo 🎨  
 ✅ Notificaciones 🔔  
 ✅ Historial y resumen de tareas por dia  📊
-
 ✅ Almacenamiento local 💾 
 
 ## 🛠️ Tecnologías utilizadas
