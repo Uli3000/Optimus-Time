@@ -23,17 +23,10 @@ export const initializeAppData = (): AppData => {
 }
 
 export const saveAppData = (data: AppData): void => {
-  if (typeof window !== "undefined") {
-    console.log("💾 Guardando en localStorage:", data)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 }
 
 export const loadAppData = (): AppData => {
-  if (typeof window === "undefined") {
-    return initializeAppData()
-  }
-
   const storedData = localStorage.getItem(STORAGE_KEY)
 
   if (!storedData) {
