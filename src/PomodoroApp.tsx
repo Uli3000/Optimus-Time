@@ -139,7 +139,7 @@ export default function PomodoroApp() {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleEndDay}
-                className="flex-1 py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5"
+                className="flex-1 py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
               >
                 Terminar Día
               </button>
@@ -147,7 +147,7 @@ export default function PomodoroApp() {
               {appData.days.length > 0 && (
                 <button
                   onClick={handleViewHistory}
-                  className="flex-1 py-4 bg-[#2a1b3e] hover:bg-[#341d4e] text-[#c4b5fd] font-medium rounded-lg transition-colors border border-[#c4b5fd]/20"
+                  className="cursor-pointer flex-1 py-4 bg-[#2a1b3e] hover:bg-[#341d4e] text-[#c4b5fd] font-medium rounded-lg transition-colors border border-[#c4b5fd]/20"
                 >
                   Ver Historial
                 </button>

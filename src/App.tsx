@@ -1,10 +1,13 @@
+import { AlertProvider } from "./components/AlertDialog"
 import PomodoroApp from "./PomodoroApp"
 
 function App() {
 
   return (
     <>
-      <PomodoroApp />
+      <AlertProvider>
+        <PomodoroApp />
+      </AlertProvider>
     </>
   )
 }

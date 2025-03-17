@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
+import { useAlert } from "./AlertDialog"
 
 interface BreakTimerProps {
   taskName: string
@@ -12,6 +13,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
   const [isActive, setIsActive] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
 
+  const showAlert = useAlert();
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const intervalRef = useRef<number | null>(null)
   const elapsedTimeRef = useRef(0)
@@ -49,6 +51,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
       audioRef.current.play().catch((e) => console.error("Error playing sound:", e))
     }
   
+    showAlert(`Tiempo de descanso de la tarea ${taskName} terminado`);
     setIsActive(false)
     setIsPaused(false)
   
@@ -62,8 +65,8 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
 
   const handleStart = () => {
     if (taskName.trim() === "") {
-      alert("Primero debes iniciar una tarea")
-      return
+      showAlert("Primero debes iniciar una tarea");
+      return;
     }
 
     if (!isActive) {
@@ -145,7 +148,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={isActive && !isPaused ? handlePause : handleStart}
-          className={`px-8 py-3 rounded-lg font-medium transition-colors border ${
+          className={`cursor-pointer px-8 py-3 rounded-lg font-medium transition-colors border ${
             isActive && !isPaused
               ? "bg-[#2a1b3e] text-[#c4b5fd] border-[#c4b5fd]/20"
               : "bg-white text-[#1a0b2e] border-white/5"
@@ -158,7 +161,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
         <motion.button
           whileTap={{ scale: 0.95 }}
           onClick={handleReset}
-          className="px-8 py-3 bg-[#2a1b3e] text-[#c4b5fd] rounded-lg font-medium border border-[#c4b5fd]/20"
+          className="cursor-pointer px-8 py-3 bg-[#2a1b3e] text-[#c4b5fd] rounded-lg font-medium border border-[#c4b5fd]/20"
           disabled={!taskName}
         >
           Reiniciar

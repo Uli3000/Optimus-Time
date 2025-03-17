@@ -74,10 +74,10 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
               <button
                 key={index}
                 onClick={() => setSelectedDay(day)}
-                className={`px-4 py-2 whitespace-nowrap rounded-lg border transition-colors ${
+                className={`cursor-pointer px-4 py-2 whitespace-nowrap rounded-lg border transition-colors ${
                   selectedDay?.date === day.date
                     ? "bg-[#c4b5fd]/20 border-[#c4b5fd]/30 text-white"
-                    : "bg-[#2a1b3e] border-[#c4b5fd]/10 text-[#c4b5fd]/70 hover:bg-[#2a1b3e]/80"
+                    : "bg-[#2a1b3e] border-[#c4b5fd]/10 text-[#c4b5fd]/70 hover:bg-[#2a1b3e]/60"
                 }`}
               >
                 {formatDate(day.date)}
@@ -145,7 +145,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
 
       <button
         onClick={onBack}
-        className="w-full py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5"
+        className="w-full py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
       >
         Volver al Temporizador
       </button>
