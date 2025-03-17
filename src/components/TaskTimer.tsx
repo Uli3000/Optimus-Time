@@ -28,27 +28,29 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
 
   useEffect(() => {
     if (isActive && !isPaused) {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-
+      const startTime = Date.now() - elapsedTimeRef.current * 1000;
+      const targetTime = startTime + duration * 60 * 1000;
+  
       intervalRef.current = window.setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            handleTimerComplete()
-            return 0
-          }
-          return prev - 1
-        })
+        const now = Date.now();
+        const newTimeLeft = Math.max(0, Math.round((targetTime - now) / 1000));
 
-        elapsedTimeRef.current += 1
-      }, 1000)
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current)
+        elapsedTimeRef.current = duration * 60 - newTimeLeft;
+
+        setTimeLeft(newTimeLeft);
+        if (newTimeLeft <= 0) {
+          clearInterval(intervalRef.current!);
+          handleTimerComplete(); 
+        }
+      }, 1000);
+    } else if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
-
+  
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [isActive, isPaused])
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isActive, isPaused]);
 
   const handleTimerComplete = () => {
     if (audioRef.current) {

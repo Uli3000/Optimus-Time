@@ -27,24 +27,31 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
 
   useEffect(() => {
     if (isActive && !isPaused) {
+      const startTime = Date.now() - elapsedTimeRef.current * 1000; // Compensa tiempo transcurrido
+      const targetTime = startTime + duration * 60 * 1000;
+  
       intervalRef.current = window.setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            handleTimerComplete()
-            return 0
-          }
-          return prev - 1
-        })
-        elapsedTimeRef.current += 1
-      }, 1000)
+        const now = Date.now();
+        const newTimeLeft = Math.max(0, Math.round((targetTime - now) / 1000));
+  
+        elapsedTimeRef.current = duration * 60 - newTimeLeft; // Mantiene precisión
+  
+        setTimeLeft(newTimeLeft);
+  
+        if (newTimeLeft <= 0) {
+          clearInterval(intervalRef.current!);
+          handleTimerComplete();
+        }
+      }, 250); // Menor intervalo para mayor precisión
     } else if (intervalRef.current) {
-      clearInterval(intervalRef.current)
+      clearInterval(intervalRef.current);
     }
-
+  
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
-    }
-  }, [isActive, isPaused])
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isActive, isPaused]);
+  
 
   const handleTimerComplete = () => {
     if (audioRef.current) {
