@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/pomodoroapp.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/alertdialog.tsx","./src/components/breaktimer.tsx","./src/components/dailysummary.tsx","./src/components/historyview.tsx","./src/components/tasktimer.tsx","./src/types/index.ts","./src/utils/apputils.ts"],"version":"5.8.2"}

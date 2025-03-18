@@ -91,7 +91,7 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
           onClick={onNewDay}
           className="flex-1 py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
         >
-          Comenzar Nuevo Día
+          Continuar Trabajando
         </button>
 
         {onViewHistory && (

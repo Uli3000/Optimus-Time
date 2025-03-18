@@ -155,15 +155,7 @@ export const finishCurrentDay = (data: AppData): AppData => {
 }
 
 export const startNewDay = (data: AppData): AppData => {
-  const updatedData: AppData = {
-    ...data,
-    currentTasks: [],
-    currentBreaks: [],
-  }
-
-  saveAppData(updatedData)
-
-  return updatedData
+  return data
 }
 
 export const getCurrentDayData = (data: AppData): { tasks: DayData["tasks"]; breaks: DayData["breaks"] } => {

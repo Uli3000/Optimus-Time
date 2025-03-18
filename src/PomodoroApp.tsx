@@ -4,7 +4,7 @@ import BreakTimer from "./components/BreakTimer"
 import DailySummary from "./components/DailySummary"
 import HistoryView from "./components/HistoryView"
 import type { AppData } from "./types"
-import { finishCurrentDay, getCurrentDayData, loadAppData, saveAppData, startNewDay } from "./utils/appUtils"
+import { finishCurrentDay, getCurrentDayData, loadAppData, saveAppData } from "./utils/appUtils"
 
 export default function PomodoroApp() {
   const [appData, setAppData] = useState<AppData | null>(null)
@@ -87,15 +87,8 @@ export default function PomodoroApp() {
   }
 
   const handleNewDay = () => {
-    setAppData((prevData) => {
-      if (!prevData) return null
-      const updatedData = startNewDay(prevData)
-      return updatedData
-    })
-
     setShowSummary(false)
     setShowHistory(false)
-    setCurrentTask("")
   }
 
   const handleViewHistory = () => {
