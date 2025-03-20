@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { useAlert } from "./AlertDialog"
+import { useTranslation } from "react-i18next"
 
 interface TaskTimerProps {
   onTaskChange: (taskName: string) => void
@@ -14,6 +15,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
   const [isActive, setIsActive] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   
+  const { t } = useTranslation();
   const showAlert = useAlert();
   const elapsedTimeRef = useRef(0)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -57,7 +59,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
       audioRef.current.play().catch((e) => console.error("Error playing sound:", e))
     }
 
-    showAlert(`Tiempo de descanso de la tarea ${taskName} terminado`);
+    showAlert(t("alert3", {taskName}));
     setIsActive(false)
     setIsPaused(false)
 
@@ -69,7 +71,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
 
   const handleStart = () => {
     if (taskName.trim() === "") {
-      showAlert("Por favor, ingresa un nombre para la tarea");
+      showAlert(t("alert4"));
       return
     }
 
@@ -128,7 +130,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
           type="text"
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
-          placeholder="¿En qué trabajarás?"
+          placeholder={t("what_work")}
           className="w-full px-4 py-3 bg-[#2a1b3e] text-white placeholder-[#c4b5fd]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]/20 border border-[#c4b5fd]/10"
         />
 
@@ -148,7 +150,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
               }}
               className="w-full px-4 py-3 bg-[#2a1b3e] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]/20 border border-[#c4b5fd]/10"
             />
-            <label className="mt-2 block text-sm text-[#c4b5fd]/70">Minutos</label>
+            <label className="mt-2 block text-sm text-[#c4b5fd]/70">{t("minutes")}</label>
           </div>
         </div>
       </div>
@@ -169,7 +171,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
               : "bg-white text-[#1a0b2e] border-white/5"
           }`}
         >
-          {isActive && !isPaused ? "Pausar" : "Iniciar"}
+          {isActive && !isPaused ? t("pause") : t("start")}
         </motion.button>
 
         <motion.button
@@ -177,7 +179,7 @@ export default function TaskTimer({ onTaskChange, onTimeComplete }: TaskTimerPro
           onClick={handleReset}
           className="cursor-pointer px-8 py-3 bg-[#2a1b3e] text-[#c4b5fd] rounded-lg font-medium border border-[#c4b5fd]/20"
         >
-          Reiniciar
+          {t("reboot")}
         </motion.button>
       </div>
     </motion.div>

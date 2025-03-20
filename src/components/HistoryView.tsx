@@ -1,6 +1,8 @@
 import { motion } from "framer-motion"
 import type { DayData } from "../types"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import i18next from "../i18n"
 
 interface HistoryViewProps {
   days: DayData[]
@@ -8,6 +10,7 @@ interface HistoryViewProps {
 }
 
 export default function HistoryView({ days, onBack }: HistoryViewProps) {
+  const { t } = useTranslation();
   const [selectedDay, setSelectedDay] = useState<DayData | null>(days.length > 0 ? days[days.length - 1] : null)
 
   const formatTime = (seconds: number) => {
@@ -25,7 +28,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
   const formatDate = (dateString: string) => {
     const [year, month, day] = dateString.split("-").map(Number)
     const date = new Date(year, month - 1, day)
-    return new Intl.DateTimeFormat("es-ES", {
+    return new Intl.DateTimeFormat(i18next.language, {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -59,12 +62,12 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
       <div className="flex items-center justify-center">
         <div className="px-4 py-1.5 text-sm bg-[#2a1b3e] text-[#c4b5fd] rounded-full inline-flex items-center gap-2 border border-[#c4b5fd]/20">
           <span className="w-1.5 h-1.5 bg-[#c4b5fd] rounded-full"></span>
-          Historial
+          {t("history")}
         </div>
       </div>
 
       <h1 className="text-3xl sm:text-4xl font-bold text-white text-center">
-        Tu <span className="text-[#c4b5fd]">progreso</span> diario
+        {t("your")}<span className="text-[#c4b5fd]">{t("p1")}</span>{t("p2")}
       </h1>
 
       <div className="space-y-6">
@@ -90,14 +93,14 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-[#2a1b3e] p-6 rounded-lg border border-[#c4b5fd]/10">
-                <p className="text-[#c4b5fd]/70 text-sm">Tiempo de Trabajo</p>
+                <p className="text-[#c4b5fd]/70 text-sm">{t("working_time")}</p>
                 <p className="text-2xl font-bold text-white mt-2">
                   {formatTime(selectedDay.tasks.reduce((acc, task) => acc + task.timeSpent, 0))}
                 </p>
               </div>
 
               <div className="bg-[#2a1b3e] p-6 rounded-lg border border-[#c4b5fd]/10">
-                <p className="text-[#c4b5fd]/70 text-sm">Tiempo de Descanso</p>
+                <p className="text-[#c4b5fd]/70 text-sm">{t("break_time")}</p>
                 <p className="text-2xl font-bold text-white mt-2">
                   {formatTime(selectedDay.breaks.reduce((acc, breakItem) => acc + breakItem.timeSpent, 0))}
                 </p>
@@ -105,7 +108,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
             </div>
 
             <div className="space-y-4">
-              <h2 className="text-lg font-medium text-[#c4b5fd]">Detalles por Tarea</h2>
+              <h2 className="text-lg font-medium text-[#c4b5fd]">{t("task_details")}</h2>
 
               {selectedDay.tasks.length > 0 ? (
                 <motion.div variants={container} initial="hidden" animate="show" className="space-y-3">
@@ -122,7 +125,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
 
                       {selectedDay.breaks.some((b) => b.taskName === task.name) && (
                         <div className="mt-2 text-sm text-[#c4b5fd]/70">
-                          <span className="text-white">Descanso:</span>{" "}
+                          <span className="text-white">{t("break")}:</span>{" "}
                           {formatTime(
                             selectedDay.breaks
                               .filter((b) => b.taskName === task.name)
@@ -135,7 +138,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
                 </motion.div>
               ) : (
                 <p className="text-[#c4b5fd]/50 text-center py-8 bg-[#2a1b3e] rounded-lg border border-[#c4b5fd]/10">
-                  No hay tareas registradas
+                  {t("no_tasks")}
                 </p>
               )}
             </div>
@@ -147,7 +150,7 @@ export default function HistoryView({ days, onBack }: HistoryViewProps) {
         onClick={onBack}
         className="w-full py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
       >
-        Volver al Temporizador
+        {t("return_timer")}
       </button>
     </motion.div>
   )

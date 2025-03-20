@@ -1,9 +1,11 @@
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { createContext, useContext, useState, ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 const AlertContext = createContext<(message: string, onClose?: () => void) => void>(() => {});
 
 export function AlertProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [onCloseCallback, setOnCloseCallback] = useState<(() => void) | undefined>();
@@ -31,7 +33,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
                       transform transition-all duration-300 ease-out data-[closed]:opacity-0 scale-95"
           >
             <DialogTitle as="h3" className="text-xl font-semibold text-[#c4b5fd]">
-              Atención
+              {t("atention")}
             </DialogTitle>
             <p className="mt-3 text-md text-white/80">{message}</p>
 
@@ -41,7 +43,7 @@ export function AlertProvider({ children }: { children: ReactNode }) {
                 className="cursor-pointer px-4 py-2 text-md font-medium text-[#c4b5fd] bg-[#2a1b3e] 
                            rounded-md transition hover:bg-[#341d4e] border border-[#c4b5fd]/20"
               >
-                Aceptar
+                {t("accept")}
               </button>
             </div>
           </DialogPanel>

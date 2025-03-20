@@ -5,12 +5,14 @@ import DailySummary from "./components/DailySummary"
 import HistoryView from "./components/HistoryView"
 import type { AppData } from "./types"
 import { finishCurrentDay, getCurrentDayData, loadAppData, saveAppData } from "./utils/appUtils"
+import { useTranslation } from "react-i18next"
 
 export default function PomodoroApp() {
   const [appData, setAppData] = useState<AppData | null>(null)
   const [currentTask, setCurrentTask] = useState("")
   const [showSummary, setShowSummary] = useState(false)
   const [showHistory, setShowHistory] = useState(false)
+  const { t } = useTranslation();
 
   useEffect(() => {
     const data = loadAppData()
@@ -20,7 +22,7 @@ export default function PomodoroApp() {
   if (!appData) {
     return (
       <main className="min-h-screen bg-[#1a0b2e] flex flex-col items-center justify-center p-4">
-        <div className="text-white">Cargando...</div>
+        <div className="text-white">{t("loading")}</div>
       </main>
     )
   }
@@ -116,7 +118,7 @@ export default function PomodoroApp() {
             </div>
 
             <h1 className="text-4xl font-bold text-white text-center">
-              Optimiza tu <span className="text-[#c4b5fd]">productividad </span>
+            {t("title1")}<span className="text-[#c4b5fd]">{t("title2")} </span>
             </h1>
 
             <div className="border border-[#c4b5fd]/10 rounded-xl p-6 bg-[#231136]">
@@ -134,7 +136,7 @@ export default function PomodoroApp() {
                 onClick={handleEndDay}
                 className="flex-1 py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
               >
-                Terminar Día
+                {t("end_day")}
               </button>
 
               {appData.days.length > 0 && (
@@ -142,7 +144,7 @@ export default function PomodoroApp() {
                   onClick={handleViewHistory}
                   className="cursor-pointer flex-1 py-4 bg-[#2a1b3e] hover:bg-[#341d4e] text-[#c4b5fd] font-medium rounded-lg transition-colors border border-[#c4b5fd]/20"
                 >
-                  Ver Historial
+                  {t("see_history")}
                 </button>
               )}
             </div>

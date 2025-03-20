@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import { useAlert } from "./AlertDialog"
+import { useTranslation } from "react-i18next"
 
 interface BreakTimerProps {
   taskName: string
@@ -13,6 +14,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
   const [isActive, setIsActive] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
 
+  const { t } = useTranslation();
   const showAlert = useAlert();
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const intervalRef = useRef<number | null>(null)
@@ -58,7 +60,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
       audioRef.current.play().catch((e) => console.error("Error playing sound:", e))
     }
   
-    showAlert(`Tiempo de descanso de la tarea ${taskName} terminado`);
+    showAlert(t("alert1", { taskName }));
     setIsActive(false)
     setIsPaused(false)
   
@@ -72,7 +74,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
 
   const handleStart = () => {
     if (taskName.trim() === "") {
-      showAlert("Primero debes iniciar una tarea");
+      showAlert(t("alert2"));
       return;
     }
 
@@ -123,7 +125,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
       transition={{ duration: 0.5, delay: 0.2 }}
       className="space-y-6"
     >
-      <h2 className="text-lg font-medium text-[#c4b5fd]">{taskName ? `Descanso de: ${taskName}` : "Descanso"}</h2>
+      <h2 className="text-lg font-medium text-[#c4b5fd]">{taskName ? t("breakFrom", { taskName }) : t("break")}</h2>
 
       <div className="flex gap-4">
         <div className="flex-1">
@@ -141,7 +143,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
             }}
             className="w-full px-4 py-3 bg-[#2a1b3e] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]/20 border border-[#c4b5fd]/10"
           />
-          <label className="mt-2 block text-sm text-[#c4b5fd]/70">Minutos de Descanso</label>
+          <label className="mt-2 block text-sm text-[#c4b5fd]/70">{t("break_minutes")}</label>
         </div>
       </div>
 
@@ -162,7 +164,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
           }`}
           disabled={!taskName}
         >
-          {isActive && !isPaused ? "Pausar" : "Iniciar"}
+          {isActive && !isPaused ? t("pause") : t("start")}
         </motion.button>
 
         <motion.button
@@ -171,7 +173,7 @@ export default function BreakTimer({ taskName, onTimeComplete }: BreakTimerProps
           className="cursor-pointer px-8 py-3 bg-[#2a1b3e] text-[#c4b5fd] rounded-lg font-medium border border-[#c4b5fd]/20"
           disabled={!taskName}
         >
-          Reiniciar
+          {t("reboot")}
         </motion.button>
       </div>
     </motion.div>

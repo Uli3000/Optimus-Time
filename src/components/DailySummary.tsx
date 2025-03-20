@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import type { Task, Break } from "../types"
+import { useTranslation } from "react-i18next"
 
 interface DailySummaryProps {
   tasks: Task[]
@@ -9,6 +10,7 @@ interface DailySummaryProps {
 }
 
 export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }: DailySummaryProps) {
+  const { t } = useTranslation();
   const formatTime = (seconds: number) => {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
@@ -34,29 +36,29 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
       <div className="flex items-center justify-center">
         <div className="px-4 py-1.5 text-sm bg-[#2a1b3e] text-[#c4b5fd] rounded-full inline-flex items-center gap-2 border border-[#c4b5fd]/20">
           <span className="w-1.5 h-1.5 bg-[#c4b5fd] rounded-full"></span>
-          Resumen del Día
+          {t("summary")}
         </div>
       </div>
 
       <h1 className="text-3xl sm:text-4xl font-bold text-white text-center">
-        Tu <span className="text-[#c4b5fd]">productividad</span> de hoy
+        {t("your")}<span className="text-[#c4b5fd]">{t("title2")}</span>{t("today")}
       </h1>
 
       <div className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-[#2a1b3e] p-6 rounded-lg border border-[#c4b5fd]/10">
-            <p className="text-[#c4b5fd]/70 text-sm">Tiempo de Trabajo</p>
+            <p className="text-[#c4b5fd]/70 text-sm">{t("working_time")}</p>
             <p className="text-2xl font-bold text-white mt-2">{formatTime(totalTaskTime)}</p>
           </div>
 
           <div className="bg-[#2a1b3e] p-6 rounded-lg border border-[#c4b5fd]/10">
-            <p className="text-[#c4b5fd]/70 text-sm">Tiempo de Descanso</p>
+            <p className="text-[#c4b5fd]/70 text-sm">{t("break_time")}</p>
             <p className="text-2xl font-bold text-white mt-2">{formatTime(totalBreakTime)}</p>
           </div>
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-lg font-medium text-[#c4b5fd]">Detalles por Tarea</h2>
+          <h2 className="text-lg font-medium text-[#c4b5fd]">{t("task_details")}</h2>
 
           {tasks.length > 0 ? (
             <motion.div className="space-y-3">
@@ -69,7 +71,7 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
 
                   {breaks.some((b) => b.taskName === task.name) && (
                     <div className="mt-2 text-sm text-[#c4b5fd]/70">
-                      <span className="text-white">Descanso:</span>{" "}
+                      <span className="text-white">{t("break")}:</span>{" "}
                       {formatTime(
                         breaks.filter((b) => b.taskName === task.name).reduce((acc, b) => acc + b.timeSpent, 0),
                       )}
@@ -80,7 +82,7 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
             </motion.div>
           ) : (
             <p className="text-[#c4b5fd]/50 text-center py-8 bg-[#2a1b3e] rounded-lg border border-[#c4b5fd]/10">
-              No hay tareas registradas
+              {t("no_tasks")}
             </p>
           )}
         </div>
@@ -91,7 +93,7 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
           onClick={onNewDay}
           className="flex-1 py-4 bg-white hover:opacity-90 text-[#1a0b2e] font-medium rounded-lg transition-opacity border border-white/5 cursor-pointer"
         >
-          Continuar Trabajando
+          {t("continue_working")}
         </button>
 
         {onViewHistory && (
@@ -99,7 +101,7 @@ export default function DailySummary({ tasks, breaks, onNewDay, onViewHistory }:
             onClick={onViewHistory}
             className="flex-1 py-4 bg-[#2a1b3e] hover:bg-[#341d4e] text-[#c4b5fd] font-medium rounded-lg transition-colors border border-[#c4b5fd]/20 cursor-pointer"
           >
-            Ver Historial
+            {t("see_history")}
           </button>
         )}
       </div>
